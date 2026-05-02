@@ -417,105 +417,53 @@
     }
 
     /* ── 포트폴리오 ── */
-    .portfolio-header { margin-bottom: 64px; }
-
-    /* 리스트형 레이아웃 */
-    .portfolio-list {
-      display: flex; flex-direction: column;
-    }
-    .pf-item {
+    .portfolio-header { text-align: center; margin-bottom: 48px; }
+    .portfolio-header .section-desc { margin: 0 auto; }
+    .portfolio-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 56px;
-      align-items: center;
-      padding: 64px 0;
-      border-top: 1px solid var(--border);
-      text-decoration: none; color: inherit;
-      transition: opacity 0.2s ease;
-      cursor: pointer;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
-    .pf-item:last-child { border-bottom: 1px solid var(--border); }
-    .pf-item:hover { opacity: 1; }
-
-    /* 이미지 래퍼 */
-    .pf-img-wrap {
-      border-radius: 18px;
-      overflow: hidden;
-      aspect-ratio: 4 / 3;
-      background: var(--bg-soft);
+    .portfolio-card {
+      border-radius: var(--radius); overflow: hidden;
+      position: relative; aspect-ratio: 4/3; cursor: pointer;
     }
-    .pf-img-wrap img {
+    .pf-placeholder {
       width: 100%; height: 100%;
-      object-fit: cover; object-position: top center;
-      display: block;
-      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 42px;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .pf-item:hover .pf-img-wrap img { transform: scale(1.04); }
-
-    /* 빈 슬롯 이미지 */
-    .pf-img-empty {
-      width: 100%; height: 100%;
+    .portfolio-card:hover .pf-placeholder { transform: scale(1.05); }
+    .pf-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,15,20,0.92) 0%, rgba(13,15,20,0.4) 60%, transparent 100%);
+      opacity: 0; transition: opacity var(--transition);
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 12px;
-      border: 2px dashed var(--border);
-      border-radius: 18px;
-      aspect-ratio: 4 / 3;
-      color: var(--text-muted);
-      font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+      justify-content: flex-end; padding: 28px;
     }
+    .portfolio-card:hover .pf-overlay { opacity: 1; }
+    .pf-category {
+      font-size: 12px; font-weight: 600; color: var(--accent);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;
+    }
+    .pf-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .pf-desc { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
 
-    /* 텍스트 영역 */
-    .pf-body { display: flex; flex-direction: column; justify-content: center; }
-    .pf-client {
-      font-size: 13px; font-weight: 500;
-      color: var(--text-muted); margin-bottom: 14px;
-      letter-spacing: 0.02em;
-    }
-    .pf-title {
-      font-size: clamp(22px, 2.8vw, 32px);
-      font-weight: 700; color: var(--text);
-      letter-spacing: -0.03em; line-height: 1.25;
-      margin-bottom: 20px;
-      transition: color 0.2s ease;
-    }
-    .pf-item:hover .pf-title { color: var(--primary); }
-    .pf-tags {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
-    }
-    .pf-tag {
-      font-size: 12px; font-weight: 600;
-      color: var(--text-sub); background: #f0f2f8;
-      padding: 5px 12px; border-radius: 100px;
-      letter-spacing: 0.01em;
-    }
-    .pf-link {
+    /* 포트폴리오 결과 지표 */
+    .pf-result {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 14px; font-weight: 600; color: var(--text);
-      width: fit-content;
-      border-bottom: 1.5px solid var(--text);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s, gap 0.2s;
-    }
-    .pf-item:hover .pf-link {
-      color: var(--primary);
-      border-color: var(--primary);
-      gap: 10px;
-    }
-    .pf-link-disabled {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 14px; font-weight: 600; color: var(--text-muted);
-      border-bottom: 1.5px solid var(--border); padding-bottom: 2px;
+      background: rgba(0,212,170,0.25); border: 1px solid rgba(0,212,170,0.4);
+      color: var(--accent); font-size: 12px; font-weight: 700;
+      padding: 4px 10px; border-radius: 100px;
     }
 
-    /* 짝수 항목은 이미지/텍스트 순서 반전 */
-    .pf-item.pf-reverse { direction: rtl; }
-    .pf-item.pf-reverse > * { direction: ltr; }
-
-    @media (max-width: 860px) {
-      .pf-item { grid-template-columns: 1fr; gap: 28px; padding: 48px 0; }
-      .pf-item.pf-reverse { direction: ltr; }
-      .pf-title { font-size: 22px; }
-    }
+    .pf-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .pf-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    .pf-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+    .pf-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+    .pf-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+    .pf-6 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
 
     /* ── 후기 섹션 ── */
     #reviews { background: var(--bg-soft); }
@@ -969,6 +917,7 @@
 
     /* 반응형 */
     @media (max-width: 900px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
       .about-inner { grid-template-columns: 1fr; gap: 48px; }
       .contact-inner { grid-template-columns: 1fr; gap: 48px; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
@@ -993,6 +942,7 @@
       .nav a.btn { color: #fff !important; border-bottom: none; padding: 11px 24px; }
       .nav a:last-child { border-bottom: none; }
       .menu-toggle { display: flex; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .form-row { grid-template-columns: 1fr; }
       .contact-form { padding: 28px 20px; }
       .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -1002,6 +952,7 @@
       .floating-cta { bottom: 80px; font-size: 13px; padding: 12px 20px; }
     }
     @media (max-width: 480px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
     }
 
     .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -1014,8 +965,8 @@
 
   <!-- 긴박감 상단 바 -->
   <div class="urgency-bar">
-    🎁 지금 신청하시면 <strong>SEO 기본 세팅 무료</strong> 제공 — 첫 상담도 물론 무료입니다
-    <a href="#contact">상담 신청 →</a>
+    🎁 <strong>이번 달 한정</strong> — 신규 계약 고객 SEO 세팅 무료 제공 중!
+    <a href="#contact">지금 신청 →</a>
   </div>
 
   <!-- 헤더 -->
@@ -1057,7 +1008,7 @@
 
         <p class="hero-sub">
           보기 좋은 것을 넘어, <strong>고객이 행동하게 만드는</strong> 웹사이트.<br>
-          기획·디자인·개발·SEO 원스톱. 이제 막 시작한 스튜디오라 <strong>한 분 한 분께 더 집중합니다.</strong>
+          기획·디자인·개발·SEO 원스톱. 2018년부터 280개+ 비즈니스와 함께했습니다.
         </p>
 
         <div class="hero-perks">
@@ -1088,20 +1039,20 @@
 
         <div class="hero-stats">
           <div class="stat-item">
+            <div class="stat-number">280<span>+</span></div>
+            <div class="stat-label">완료된 프로젝트</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">98<span>%</span></div>
+            <div class="stat-label">고객 만족도</div>
+          </div>
+          <div class="stat-item">
             <div class="stat-number">7<span>일</span></div>
-            <div class="stat-label">납품 목표 기간</div>
+            <div class="stat-label">평균 납품 기간</div>
           </div>
           <div class="stat-item">
-            <div class="stat-number">3<span>개</span></div>
-            <div class="stat-label">완성된 포트폴리오</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">100<span>%</span></div>
-            <div class="stat-label">수정 무제한 보장</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">0<span>원</span></div>
-            <div class="stat-label">첫 상담 비용</div>
+            <div class="stat-number">6<span>년</span></div>
+            <div class="stat-label">전문 업력</div>
           </div>
         </div>
       </div>
@@ -1113,31 +1064,27 @@
     <div class="clients-label">함께한 기업 · 브랜드</div>
     <div class="clients-track-wrap">
       <div class="clients-track">
-        <span class="client-logo">엘스기타학원 엘스드럼학원</span>
-        <span class="client-logo">대한예수교장로회 소중한교회</span>
-        <span class="client-logo">링키영어율현에듀영어교습소</span>
-        <span class="client-logo">엘스기타학원 엘스드럼학원</span>
-        <span class="client-logo">대한예수교장로회 소중한교회</span>
-        <span class="client-logo">링키영어율현에듀영어교습소</span>
-        <span class="client-logo">엘스기타학원 엘스드럼학원</span>
-        <span class="client-logo">대한예수교장로회 소중한교회</span>
-        <span class="client-logo">링키영어율현에듀영어교습소</span>
-        <span class="client-logo">엘스기타학원 엘스드럼학원</span>
-        <span class="client-logo">대한예수교장로회 소중한교회</span>
-        <span class="client-logo">링키영어율현에듀영어교습소</span>
+        <span class="client-logo">강남피부과</span>
+        <span class="client-logo">테헤란 법무법인</span>
+        <span class="client-logo">오늘의집 인테리어</span>
+        <span class="client-logo">클린잇 세탁소</span>
+        <span class="client-logo">스타벅스 파트너</span>
+        <span class="client-logo">비타민 영양제</span>
+        <span class="client-logo">런던 유학원</span>
+        <span class="client-logo">코리아핏니스</span>
+        <span class="client-logo">화이트치과</span>
+        <span class="client-logo">두잇 마케팅</span>
         <!-- 반복 (marquee 효과) -->
-        <span class="client-logo">엘스기타학원 엘스드럼학원</span>
-        <span class="client-logo">대한예수교장로회 소중한교회</span>
-        <span class="client-logo">링키영어율현에듀영어교습소</span>
-        <span class="client-logo">엘스기타학원 엘스드럼학원</span>
-        <span class="client-logo">대한예수교장로회 소중한교회</span>
-        <span class="client-logo">링키영어율현에듀영어교습소</span>
-        <span class="client-logo">엘스기타학원 엘스드럼학원</span>
-        <span class="client-logo">대한예수교장로회 소중한교회</span>
-        <span class="client-logo">링키영어율현에듀영어교습소</span>
-        <span class="client-logo">엘스기타학원 엘스드럼학원</span>
-        <span class="client-logo">대한예수교장로회 소중한교회</span>
-        <span class="client-logo">링키영어율현에듀영어교습소</span>
+        <span class="client-logo">강남피부과</span>
+        <span class="client-logo">테헤란 법무법인</span>
+        <span class="client-logo">오늘의집 인테리어</span>
+        <span class="client-logo">클린잇 세탁소</span>
+        <span class="client-logo">스타벅스 파트너</span>
+        <span class="client-logo">비타민 영양제</span>
+        <span class="client-logo">런던 유학원</span>
+        <span class="client-logo">코리아핏니스</span>
+        <span class="client-logo">화이트치과</span>
+        <span class="client-logo">두잇 마케팅</span>
       </div>
     </div>
   </section>
@@ -1229,65 +1176,70 @@
   </section>
 
   <!-- 포트폴리오 -->
-  <section id="portfolio" class="section" style="background: var(--bg);">
+  <section id="portfolio" class="section" style="background: var(--bg-soft);">
     <div class="container">
       <div class="portfolio-header">
-        <p class="section-label reveal">Portfolio</p>
+        <p class="section-label reveal">포트폴리오</p>
         <h2 class="section-title reveal reveal-delay-1">직접 보여드리는 결과물</h2>
+        <p class="section-desc reveal reveal-delay-2">
+          다양한 업종의 프로젝트를 성공적으로 완료했습니다.
+        </p>
       </div>
-
-      <div class="portfolio-list">
-
-        <!-- 01. El's Guitar -->
-        <a class="pf-item reveal" href="https://elsmusic.netlify.app/" target="_blank" rel="noopener">
-          <div class="pf-img-wrap">
-            <img src="https://elsmusic.netlify.app/7.jpg" alt="El's Guitar" loading="lazy">
-          </div>
-          <div class="pf-body">
-            <p class="pf-client">01 — 음악학원</p>
-            <h3 class="pf-title">기타·드럼을 배우는<br>특별한 공간, El's Guitar</h3>
-            <div class="pf-tags">
-              <span class="pf-tag">홈페이지 제작</span>
-              <span class="pf-tag">모바일 최적화</span>
-              <span class="pf-tag">갤러리</span>
-              <span class="pf-tag">레슨 안내</span>
-            </div>
-            <span class="pf-link">사이트 보기 →</span>
-          </div>
-        </a>
-
-        <!-- 02. Coming Soon -->
-        <div class="pf-item pf-reverse reveal reveal-delay-1" style="cursor:default;">
-          <div class="pf-img-empty">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
-            Coming Soon
-          </div>
-          <div class="pf-body">
-            <p class="pf-client">02 — 준비 중</p>
-            <h3 class="pf-title" style="color:var(--text-muted);">새로운 프로젝트를<br>준비하고 있습니다</h3>
-            <div class="pf-tags">
-              <span class="pf-tag">포트폴리오 추가 예정</span>
-            </div>
-            <span class="pf-link-disabled">공개 예정 —</span>
+      <div class="portfolio-grid">
+        <div class="portfolio-card reveal">
+          <div class="pf-placeholder pf-1">🏥</div>
+          <div class="pf-overlay">
+            <p class="pf-category">의료 / 병원</p>
+            <p class="pf-title">서울 강남 피부과 홈페이지</p>
+            <p class="pf-desc">예약 시스템 연동 · 모바일 최적화</p>
+            <span class="pf-result">📈 예약 전환율 +240%</span>
           </div>
         </div>
-
-        <!-- 03. Coming Soon -->
-        <div class="pf-item reveal reveal-delay-2" style="cursor:default;">
-          <div class="pf-img-empty">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
-            Coming Soon
-          </div>
-          <div class="pf-body">
-            <p class="pf-client">03 — 준비 중</p>
-            <h3 class="pf-title" style="color:var(--text-muted);">새로운 프로젝트를<br>준비하고 있습니다</h3>
-            <div class="pf-tags">
-              <span class="pf-tag">포트폴리오 추가 예정</span>
-            </div>
-            <span class="pf-link-disabled">공개 예정 —</span>
+        <div class="portfolio-card reveal reveal-delay-1">
+          <div class="pf-placeholder pf-2">⚖️</div>
+          <div class="pf-overlay">
+            <p class="pf-category">법률 / 법무법인</p>
+            <p class="pf-title">테헤란 법무법인 사이트</p>
+            <p class="pf-desc">온라인 상담 폼 · SEO 최적화</p>
+            <span class="pf-result">📈 월 문의 +180%</span>
           </div>
         </div>
-
+        <div class="portfolio-card reveal reveal-delay-2">
+          <div class="pf-placeholder pf-3">🏠</div>
+          <div class="pf-overlay">
+            <p class="pf-category">인테리어 / 리모델링</p>
+            <p class="pf-title">프리미엄 인테리어 랜딩</p>
+            <p class="pf-desc">포트폴리오 갤러리 · 견적 계산기</p>
+            <span class="pf-result">📈 리드 단가 -52%</span>
+          </div>
+        </div>
+        <div class="portfolio-card reveal">
+          <div class="pf-placeholder pf-4">🌿</div>
+          <div class="pf-overlay">
+            <p class="pf-category">건강식품 / 이커머스</p>
+            <p class="pf-title">유기농 건강식품 쇼핑몰</p>
+            <p class="pf-desc">Cafe24 연동 · 구독 모델</p>
+            <span class="pf-result">📈 월 매출 2.3배</span>
+          </div>
+        </div>
+        <div class="portfolio-card reveal reveal-delay-1">
+          <div class="pf-placeholder pf-5">✈️</div>
+          <div class="pf-overlay">
+            <p class="pf-category">교육 / 유학</p>
+            <p class="pf-title">유학원 브랜드 사이트</p>
+            <p class="pf-desc">다국어 지원 · 블로그 CMS</p>
+            <span class="pf-result">📈 자연 유입 +310%</span>
+          </div>
+        </div>
+        <div class="portfolio-card reveal reveal-delay-2">
+          <div class="pf-placeholder pf-6">🛍️</div>
+          <div class="pf-overlay">
+            <p class="pf-category">패션 / 쇼핑몰</p>
+            <p class="pf-title">프리미엄 의류 쇼핑몰</p>
+            <p class="pf-desc">커스텀 쇼핑몰 · PG 연동</p>
+            <span class="pf-result">📈 재구매율 +88%</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1299,7 +1251,7 @@
         <p class="section-label reveal">고객 후기</p>
         <h2 class="section-title reveal reveal-delay-1">실제 고객들의 이야기</h2>
         <p class="section-desc reveal reveal-delay-2" style="margin: 0 auto;">
-          98%의 만족도. 직접 확인해보세요.
+          280개 프로젝트, 98%의 만족도. 직접 확인해보세요.
         </p>
       </div>
       <div class="reviews-grid">
@@ -1351,7 +1303,7 @@
             우리는 단순히<br>사이트를 만들지 않습니다
           </h2>
           <p class="section-desc reveal reveal-delay-2">
-            WEAVE는 이제 막 시작한 소규모 스튜디오입니다. 화려한 실적보다 <strong style="color:var(--accent)">한 분 한 분께 집중하는 작업 방식</strong>을 선택했습니다. 작기 때문에 더 빠르고, 더 꼼꼼하게 소통할 수 있습니다.
+            WEAVE는 2018년부터 수백 개의 비즈니스와 함께 성장해온 홈페이지 제작 전문 스튜디오입니다. 우리의 목표는 고객의 비즈니스 목표를 달성하는 결과물을 만드는 것입니다.
           </p>
           <div class="about-values reveal reveal-delay-3">
             <div class="value-item">
@@ -1379,20 +1331,20 @@
         </div>
         <div class="about-right reveal">
           <div class="metric-card">
-            <div class="metric-num">3<em>개</em></div>
-            <div class="metric-label">완성 포트폴리오</div>
+            <div class="metric-num">280<em>+</em></div>
+            <div class="metric-label">프로젝트 완료</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">98<em>%</em></div>
+            <div class="metric-label">재의뢰율</div>
           </div>
           <div class="metric-card">
             <div class="metric-num">7<em>일</em></div>
-            <div class="metric-label">납품 목표</div>
+            <div class="metric-label">평균 납품일</div>
           </div>
           <div class="metric-card">
-            <div class="metric-num">∞<em></em></div>
-            <div class="metric-label">수정 횟수 제한</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-num">0<em>원</em></div>
-            <div class="metric-label">첫 상담 비용</div>
+            <div class="metric-num">6<em>년</em></div>
+            <div class="metric-label">업력</div>
           </div>
         </div>
       </div>
