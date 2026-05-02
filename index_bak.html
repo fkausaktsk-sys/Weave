@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WEAVE Studio — 홈페이지 제작 전문</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #1a3fff;
+      --primary-dark: #0f2be0;
+      --primary-light: #eef1ff;
+      --accent: #00e5b8;
+      --accent-warm: #ff6b35;
+      --text: #09090f;
+      --text-sub: #52566a;
+      --text-muted: #9aa0b8;
+      --bg: #ffffff;
+      --bg-soft: #f6f8ff;
+      --border: #e2e6f5;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --header-h: 76px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
+
+    /* ===========================
+       LAYOUT
+    =========================== */
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .section { padding: 110px 0; }
+
+    .section-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(30px, 4.5vw, 52px);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 22px;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--text-sub);
+      max-width: 520px;
+      line-height: 1.85;
+    }
+
+    /* ===========================
+       HEADER
+    =========================== */
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    #header.scrolled {
+      border-color: var(--border);
+      box-shadow: 0 2px 32px rgba(15,15,40,0.07);
+    }
+    #header .container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Sora', sans-serif;
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .logo-accent { color: var(--primary); }
+    .logo-mark {
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+      margin-left: 3px;
+      margin-bottom: 10px;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+    }
+    .nav a {
+      font-family: 'Sora', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-sub);
+      transition: color 0.25s var(--ease);
+      position: relative;
+      letter-spacing: -0.01em;
+    }
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1.5px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+      transition: width 0.3s var(--ease);
+    }
+    .nav a:not(.btn):hover { color: var(--text); }
+    .nav a:not(.btn):hover::after { width: 100%; }
+
+    /* ===========================
+       BUTTONS — Luxury Style
+    =========================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 26px;
+      border-radius: 100px;
+      font-family: 'Sora', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      border: none;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: -0.01em;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background 0.3s var(--ease);
+    }
+    .btn:hover::after { background: rgba(255,255,255,0.08); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #2e5bff 100%);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(26,63,255,0.28), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.015);
+      box-shadow: 0 8px 32px rgba(26,63,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .btn-primary:active { transform: translateY(0) scale(0.99); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      box-shadow: inset 0 0 0 0 var(--primary);
+    }
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(26,63,255,0.12);
+    }
+
+    .btn-lg {
+      padding: 17px 38px;
+      font-size: 15px;
+    }
+
+    /* Arrow icon in buttons */
+    .btn-arrow {
+      width: 18px; height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      transition: transform 0.3s var(--spring);
+    }
+    .btn-primary:hover .btn-arrow { transform: translateX(3px); }
+    .btn-outline .btn-arrow {
+      background: rgba(26,63,255,0.08);
+    }
+    .btn-outline:hover .btn-arrow { transform: translateX(3px); }
+
+    /* Hamburger */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .menu-toggle span {
+      width: 22px; height: 1.5px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s var(--ease);
+      display: block;
+    }
+
+    /* ===========================
+       HERO — Cinematic
+    =========================== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--header-h);
+      position: relative;
+      overflow: hidden;
+      background: #09090f;
+    }
+
+    /* Noise grain overlay */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Radial gradient orbs */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-orb-1 {
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, rgba(26,63,255,0.22) 0%, transparent 65%);
+      top: -300px; right: -200px;
+      animation: orb-drift 12s ease-in-out infinite alternate;
+    }
+    .hero-orb-2 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,229,184,0.12) 0%, transparent 65%);
+      bottom: -200px; left: -100px;
+      animation: orb-drift 15s ease-in-out infinite alternate-reverse;
+    }
+    .hero-orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,107,53,0.08) 0%, transparent 65%);
+      top: 40%; left: 45%;
+      animation: orb-drift 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes orb-drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, -30px) scale(1.05); }
+    }
+
+    /* Hero grid lines */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      padding: 40px 0;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-family: 'Sora', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 40px;
+      animation: fadeInUp 0.7s ease both;
+      backdrop-filter: blur(10px);
+    }
+
+    .badge-pulse {
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: relative;
+    }
+    .badge-pulse::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.4;
+      animation: badge-ring 1.5s ease-in-out infinite;
+    }
+    @keyframes badge-ring {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(2.2); opacity: 0; }
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(42px, 7vw, 88px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.7s 0.1s ease both;
+    }
+
+    .hero-title .line-accent {
+      display: block;
+      background: linear-gradient(90deg, var(--accent) 0%, #4af5d9 50%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% auto;
+      animation: shimmer 4s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .hero-title .line-italic {
+      font-style: italic;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 1.8vw, 20px);
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 52px;
+      line-height: 1.8;
+      animation: fadeInUp 0.7s 0.2s ease both;
+      max-width: 560px;
+    }
+
+    .hero-sub strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.7s 0.3s ease both;
+    }
+
+    /* Hero stats */
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      margin-top: 80px;
+      padding-top: 52px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      animation: fadeInUp 0.7s 0.4s ease both;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      padding-right: 52px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      margin-right: 52px;
+    }
+    .stat-item:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+
+    .stat-number {
+      font-family: 'Sora', sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .stat-number span { color: var(--accent); }
+
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+      animation: fadeInUp 0.7s 1s ease both;
+    }
+    .scroll-hint span {
+      font-family: 'Sora', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+      animation: scroll-drop 2s ease-in-out infinite;
+    }
+    @keyframes scroll-drop {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ===========================
+       SERVICES
+    =========================== */
+    #services { background: var(--bg-soft); }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 64px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 44px 38px;
+      border: 1px solid var(--border);
+      transition: all 0.4s var(--ease);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary-light) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(26,63,255,0.1), 0 4px 16px rgba(0,0,0,0.04);
+      border-color: transparent;
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-icon {
+      width: 56px; height: 56px;
+      background: var(--primary-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      font-size: 26px;
+      transition: transform 0.4s var(--spring);
+      position: relative;
+      z-index: 1;
+    }
+    .service-card:hover .service-icon { transform: scale(1.1) rotate(-4deg); }
+
+    .service-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: -0.025em;
+      position: relative;
+      z-index: 1;
+    }
+    .service-desc {
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+    .service-tag {
+      display: inline-block;
+      margin-top: 24px;
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 5px 14px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===========================
+       PORTFOLIO — Magnetic Cards
+    =========================== */
+    .portfolio-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+    .portfolio-header .section-label {
+      justify-content: center;
+    }
+    .portfolio-header .section-label::before { display: none; }
+    .portfolio-header .section-desc { margin: 0 auto; }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .portfolio-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      isolation: isolate;
+    }
+
+    /* Fancy colored backgrounds */
+    .pf-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .pf-1 {
+      background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+    }
+    .pf-2 {
+      background: linear-gradient(145deg, #12100e, #2c1654);
+    }
+    .pf-3 {
+      background: linear-gradient(145deg, #0d1b2a, #1b4332);
+    }
+    .pf-4 {
+      background: linear-gradient(145deg, #1a0533, #4a0e0e);
+    }
+    .pf-5 {
+      background: linear-gradient(145deg, #0c1445, #1a3a5c);
+    }
+    .pf-6 {
+      background: linear-gradient(145deg, #0d0d0d, #1a0a2e);
+    }
+
+    /* Decorative patterns per card */
+    .portfolio-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      transition: opacity 0.5s var(--ease);
+    }
+    .portfolio-card:nth-child(1)::before {
+      background: radial-gradient(circle at 30% 30%, rgba(99,102,241,0.3), transparent 60%);
+    }
+    .portfolio-card:nth-child(2)::before {
+      background: radial-gradient(circle at 70% 30%, rgba(236,72,153,0.3), transparent 60%);
+    }
+    .portfolio-card:nth-child(3)::before {
+      background: radial-gradient(circle at 50% 70%, rgba(16,185,129,0.3), transparent 60%);
+    }
+    .portfolio-card:nth-child(4)::before {
+      background: radial-gradient(circle at 20% 80%, rgba(239,68,68,0.3), transparent 60%);
+    }
+    .portfolio-card:nth-child(5)::before {
+      background: radial-gradient(circle at 80% 50%, rgba(59,130,246,0.3), transparent 60%);
+    }
+    .portfolio-card:nth-child(6)::before {
+      background: radial-gradient(circle at 50% 30%, rgba(168,85,247,0.3), transparent 60%);
+    }
+
+    .portfolio-card:hover .pf-placeholder { transform: scale(1.08); }
+    .portfolio-card:hover::before { opacity: 0.6; }
+
+    /* Overlay info */
+    .pf-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.92) 0%,
+        rgba(0,0,0,0.5) 50%,
+        transparent 100%
+      );
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px 28px;
+    }
+    .portfolio-card:hover .pf-overlay { opacity: 1; }
+
+    /* Slide-up text on hover */
+    .pf-text-inner {
+      transform: translateY(12px);
+      transition: transform 0.4s var(--spring);
+    }
+    .portfolio-card:hover .pf-text-inner { transform: translateY(0); }
+
+    .pf-category {
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .pf-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 21px;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .pf-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Hover corner badge */
+    .pf-badge {
+      position: absolute;
+      top: 20px; right: 20px;
+      z-index: 3;
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transform: scale(0.7) rotate(-45deg);
+      transition: all 0.4s var(--spring);
+      color: white;
+      font-size: 16px;
+    }
+    .portfolio-card:hover .pf-badge {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    /* ===========================
+       ABOUT — Dark luxury
+    =========================== */
+    #about {
+      background: #09090f;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-bg-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(26,63,255,0.15) 0%, transparent 65%);
+      top: -200px; right: -150px;
+      pointer-events: none;
+    }
+    .about-bg-glow-2 {
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,229,184,0.08) 0%, transparent 65%);
+      bottom: -100px; left: -50px;
+      pointer-events: none;
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-left .section-label { color: var(--accent); }
+    .about-left .section-label::before { background: var(--accent); }
+    .about-left .section-title { color: #fff; }
+    .about-left .section-desc { color: rgba(255,255,255,0.55); max-width: none; }
+
+    .about-values {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 44px;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 20px 24px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      transition: all 0.3s var(--ease);
+    }
+    .value-item:hover {
+      background: rgba(26,63,255,0.1);
+      border-color: rgba(26,63,255,0.25);
+      transform: translateX(4px);
+    }
+    .value-icon {
+      width: 38px; height: 38px;
+      background: rgba(26,63,255,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .value-text strong {
+      display: block;
+      font-family: 'Sora', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .value-text p {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+    }
+
+    /* Metric cards */
+    .about-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .metric-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      transition: all 0.35s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26,63,255,0.12) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s var(--ease);
+    }
+    .metric-card:hover {
+      background: rgba(26,63,255,0.08);
+      border-color: rgba(26,63,255,0.25);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .metric-card:hover::before { opacity: 1; }
+
+    .metric-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .metric-num em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .metric-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 12px;
+      letter-spacing: 0.01em;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===========================
+       CONTACT
+    =========================== */
+    #contact { background: var(--bg-soft); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.55fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left .section-desc { margin-bottom: 44px; }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      transition: all 0.3s var(--ease);
+    }
+    .contact-info-item:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 16px rgba(26,63,255,0.08);
+      transform: translateX(4px);
+    }
+    .contact-info-item .ci-icon {
+      width: 42px; height: 42px;
+      background: var(--primary-light);
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      transition: transform 0.3s var(--spring);
+    }
+    .contact-info-item:hover .ci-icon { transform: scale(1.1) rotate(-5deg); }
+    .contact-info-item .ci-text { font-size: 14px; color: var(--text-sub); }
+    .contact-info-item .ci-text strong {
+      display: block;
+      font-family: 'Sora', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    /* Form card */
+    .contact-form {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 52px 48px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 48px rgba(26,63,255,0.06);
+    }
+
+    .form-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 36px;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-family: 'Sora', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 9px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--text);
+      background: var(--bg-soft);
+      outline: none;
+      transition: all 0.25s var(--ease);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      background: var(--bg);
+      box-shadow: 0 0 0 4px rgba(26,63,255,0.08);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-muted); }
+    .form-group textarea { height: 140px; resize: vertical; }
+
+    /* Submit button */
+    .btn-submit {
+      width: 100%;
+      padding: 18px;
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      border-radius: 100px;
+      background: linear-gradient(135deg, var(--primary) 0%, #2e5bff 100%);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(26,63,255,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.12) 100%);
+      opacity: 0;
+      transition: opacity 0.3s var(--ease);
+    }
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 36px rgba(26,63,255,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .btn-submit:hover::before { opacity: 1; }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit-icon {
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: transform 0.3s var(--spring);
+    }
+    .btn-submit:hover .btn-submit-icon { transform: translateX(4px); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      background: #09090f;
+      color: #fff;
+      padding: 18px 26px;
+      border-radius: 14px;
+      font-family: 'Sora', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+      transform: translateY(90px) scale(0.95);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .toast.show { transform: translateY(0) scale(1); opacity: 1; }
+    .toast-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    #footer {
+      background: #09090f;
+      color: rgba(255,255,255,0.45);
+      padding: 52px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-logo {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.04em;
+    }
+    .footer-info { font-size: 13px; text-align: center; line-height: 1.8; }
+    .footer-info a { color: rgba(255,255,255,0.5); transition: color 0.25s; }
+    .footer-info a:hover { color: var(--accent); }
+    .footer-right { font-size: 13px; }
+
+    /* ===========================
+       ANIMATIONS
+    =========================== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 960px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-inner { grid-template-columns: 1fr; gap: 52px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 52px; }
+    }
+
+    @media (max-width: 700px) {
+      :root { --header-h: 64px; }
+      .section { padding: 80px 0; }
+
+      .nav {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+      }
+      .nav.open {
+        display: flex;
+        position: fixed;
+        top: var(--header-h); left: 0; right: 0;
+        background: rgba(255,255,255,0.97);
+        backdrop-filter: blur(20px);
+        padding: 16px 24px 28px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+      }
+      .nav a {
+        padding: 15px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 16px;
+        width: 100%;
+      }
+      .nav a:last-child { border-bottom: none; }
+      .nav a.btn { margin-top: 8px; text-align: center; justify-content: center; }
+      .menu-toggle { display: flex; }
+
+      .hero-title { font-size: clamp(38px, 10vw, 60px); }
+      .hero-stats { gap: 0; }
+      .stat-item { padding-right: 28px; margin-right: 28px; }
+
+      .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 32px 26px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-info { text-align: left; }
+
+      .about-right { grid-template-columns: 1fr 1fr; }
+      .scroll-hint { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .stat-item { padding-right: 20px; margin-right: 20px; }
+    }
+
+    .menu-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="container">
+      <a href="#hero" class="logo">
+        WEA<span class="logo-accent">VE</span><span class="logo-mark"></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="mainNav">
+        <a href="#hero">Home</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="btn btn-primary">
+          문의하기
+          <span class="btn-arrow">→</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-pulse"></span>
+          홈페이지 제작 No.1 스튜디오
+        </div>
+
+        <h1 class="hero-title">
+          당신의 비즈니스를<br>
+          <span class="line-accent">빠르고 세련되게</span>
+          <span class="line-italic">온라인으로</span>
+        </h1>
+
+        <p class="hero-sub">
+          기획부터 디자인, 개발까지 — <strong>WEAVE가 함께합니다.</strong><br>
+          첫 상담 무료. 납품 후 3개월 무상 유지보수 제공.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary btn-lg">
+            무료 상담 신청하기
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="#portfolio" class="btn btn-outline btn-lg" style="color:#fff; border-color:rgba(255,255,255,0.2);">
+            포트폴리오 보기
+            <span class="btn-arrow" style="background:rgba(255,255,255,0.08);">↓</span>
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">280<span>+</span></div>
+            <div class="stat-label">완료된 프로젝트</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">98<span>%</span></div>
+            <div class="stat-label">고객 재의뢰율</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">7<span>일</span></div>
+            <div class="stat-label">평균 납품일</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="services-header">
+        <div>
+          <p class="section-label reveal">Services</p>
+          <h2 class="section-title reveal reveal-delay-1">
+            비즈니스에 맞는<br>최적의 솔루션
+          </h2>
+        </div>
+        <p class="section-desc reveal reveal-delay-2">
+          단순한 제작을 넘어, 고객의 목표를 달성하는 전략적 결과물을 만듭니다.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">🏢</div>
+          <h3 class="service-title">비즈니스 홈페이지</h3>
+          <p class="service-desc">기업의 신뢰도를 높이는 전문적인 홈페이지. SEO 최적화와 모바일 대응까지 완벽하게 제작합니다.</p>
+          <span class="service-tag">가장 인기</span>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">🚀</div>
+          <h3 class="service-title">랜딩페이지</h3>
+          <p class="service-desc">전환율을 극대화하는 집중형 랜딩페이지. 광고 연동에 최적화된 구조로 ROI를 높입니다.</p>
+          <span class="service-tag">고전환율</span>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">🛒</div>
+          <h3 class="service-title">쇼핑몰 구축</h3>
+          <p class="service-desc">PG 연동부터 재고 관리까지. 구매 경험을 최적화한 커머스 솔루션을 제공합니다.</p>
+          <span class="service-tag">풀스택</span>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon">🔧</div>
+          <h3 class="service-title">유지보수 & 운영</h3>
+          <p class="service-desc">납품 후에도 안심하세요. 정기적인 업데이트와 모니터링으로 사이트를 최상의 상태로 유지합니다.</p>
+          <span class="service-tag">24/7 지원</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" class="section">
+    <div class="container">
+      <div class="portfolio-header">
+        <p class="section-label reveal">Portfolio</p>
+        <h2 class="section-title reveal reveal-delay-1">선별된 프로젝트</h2>
+        <p class="section-desc reveal reveal-delay-2">각 프로젝트에 담긴 고민과 전략을 확인해 보세요.</p>
+      </div>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-card reveal">
+          <div class="pf-placeholder pf-1">🏛️</div>
+          <div class="pf-badge">↗</div>
+          <div class="pf-overlay">
+            <div class="pf-text-inner">
+              <p class="pf-category">법률 / 전문직</p>
+              <p class="pf-title">프리미엄 법무법인</p>
+              <p class="pf-desc">반응형 · SEO 최적화</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-1">
+          <div class="pf-placeholder pf-2">🍽️</div>
+          <div class="pf-badge">↗</div>
+          <div class="pf-overlay">
+            <div class="pf-text-inner">
+              <p class="pf-category">F&B / 레스토랑</p>
+              <p class="pf-title">파인다이닝 브랜드</p>
+              <p class="pf-desc">예약 시스템 · CMS 연동</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-2">
+          <div class="pf-placeholder pf-3">🌿</div>
+          <div class="pf-badge">↗</div>
+          <div class="pf-overlay">
+            <div class="pf-text-inner">
+              <p class="pf-category">헬스 / 웰니스</p>
+              <p class="pf-title">프리미엄 스파 센터</p>
+              <p class="pf-desc">예약 자동화 · 회원관리</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal">
+          <div class="pf-placeholder pf-4">🎨</div>
+          <div class="pf-badge">↗</div>
+          <div class="pf-overlay">
+            <div class="pf-text-inner">
+              <p class="pf-category">크리에이티브 / 에이전시</p>
+              <p class="pf-title">디자인 스튜디오</p>
+              <p class="pf-desc">포트폴리오 · 인터랙션</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-1">
+          <div class="pf-placeholder pf-5">🏥</div>
+          <div class="pf-badge">↗</div>
+          <div class="pf-overlay">
+            <div class="pf-text-inner">
+              <p class="pf-category">의료 / 클리닉</p>
+              <p class="pf-title">피부과 전문 클리닉</p>
+              <p class="pf-desc">온라인 예약 · DB 연동</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-2">
+          <div class="pf-placeholder pf-6">🛍️</div>
+          <div class="pf-badge">↗</div>
+          <div class="pf-overlay">
+            <div class="pf-text-inner">
+              <p class="pf-category">패션 / 쇼핑몰</p>
+              <p class="pf-title">프리미엄 의류 쇼핑몰</p>
+              <p class="pf-desc">커스텀 쇼핑몰 · PG 연동</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="about-bg-glow"></div>
+    <div class="about-bg-glow-2"></div>
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-left">
+          <p class="section-label reveal">About WEAVE</p>
+          <h2 class="section-title reveal reveal-delay-1">우리는 단순히<br>사이트를 만들지 않습니다</h2>
+          <p class="section-desc reveal reveal-delay-2">
+            WEAVE는 2018년부터 수백 개의 비즈니스와 함께 성장해온 홈페이지 제작 전문 스튜디오입니다. 고객의 비즈니스 목표를 달성하는 결과물을 만드는 것이 우리의 사명입니다.
+          </p>
+
+          <div class="about-values reveal reveal-delay-3">
+            <div class="value-item">
+              <div class="value-icon">⚡</div>
+              <div class="value-text">
+                <strong>빠른 납품</strong>
+                <p>평균 7일 이내 납품. 급한 프로젝트도 품질을 양보하지 않습니다.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon">💎</div>
+              <div class="value-text">
+                <strong>퀄리티 보장</strong>
+                <p>납품 후 3개월 무상 수정. 만족할 때까지 책임집니다.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon">🤝</div>
+              <div class="value-text">
+                <strong>투명한 커뮤니케이션</strong>
+                <p>진행 상황을 실시간으로 공유. 놀라운 일은 없습니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-right reveal">
+          <div class="metric-card">
+            <div class="metric-num">280<em>+</em></div>
+            <div class="metric-label">프로젝트 완료</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">98<em>%</em></div>
+            <div class="metric-label">재의뢰율</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">7<em>일</em></div>
+            <div class="metric-label">평균 납품일</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num">6<em>년</em></div>
+            <div class="metric-label">업력</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-left">
+          <p class="section-label reveal">Contact</p>
+          <h2 class="section-title reveal reveal-delay-1">지금 바로<br>무료 상담을 받아보세요</h2>
+          <p class="section-desc reveal reveal-delay-2">
+            어떤 사이트를 원하시는지 알려주세요.<br>24시간 내에 담당자가 연락드립니다.
+          </p>
+
+          <div class="reveal reveal-delay-3">
+            <div class="contact-info-item">
+              <div class="ci-icon">📧</div>
+              <div class="ci-text">
+                <strong>이메일</strong>
+                hello@weavestudio.kr
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="ci-icon">📞</div>
+              <div class="ci-text">
+                <strong>전화 (평일 09:00 ~ 18:00)</strong>
+                02-1234-5678
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="ci-icon">📍</div>
+              <div class="ci-text">
+                <strong>주소</strong>
+                서울특별시 강남구 테헤란로 123
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form reveal reveal-delay-2">
+          <h3 class="form-title">📋 프로젝트 문의</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">이름 *</label>
+              <input type="text" id="name" placeholder="홍길동" />
+            </div>
+            <div class="form-group">
+              <label for="company">회사 / 기관명</label>
+              <input type="text" id="company" placeholder="(주) 예시회사" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">이메일 *</label>
+            <input type="email" id="email" placeholder="hello@example.com" />
+          </div>
+
+          <div class="form-group">
+            <label for="service">원하시는 서비스</label>
+            <select id="service">
+              <option value="" disabled selected>서비스를 선택해 주세요</option>
+              <option>비즈니스 홈페이지 제작</option>
+              <option>랜딩페이지 제작</option>
+              <option>쇼핑몰 구축</option>
+              <option>유지보수 & 운영 관리</option>
+              <option>기타 문의</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">문의 내용 *</label>
+            <textarea id="message" placeholder="어떤 사이트를 원하시는지, 예산과 일정 등을 자유롭게 적어주세요."></textarea>
+          </div>
+
+          <button class="btn-submit" id="submitBtn" type="button">
+            문의 보내기
+            <span class="btn-submit-icon">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">WEA<span style="color:var(--accent)">VE</span></div>
+        <div class="footer-info">
+          <a href="mailto:hello@weavestudio.kr">hello@weavestudio.kr</a>
+          &nbsp;·&nbsp; 사업자등록번호 123-45-67890<br>
+          © 2025 WEAVE Studio. All rights reserved.
+        </div>
+        <div class="footer-right">Made with ❤️ in Seoul</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <span class="toast-dot"></span>
+    문의가 접수되었습니다. 24시간 내 연락드릴게요!
+  </div>
+
+  <script>
+    // Header scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Mobile menu
+    const toggle = document.getElementById('menuToggle');
+    const nav    = document.getElementById('mainNav');
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('open');
+      nav.classList.toggle('open');
+    });
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        toggle.classList.remove('open');
+        nav.classList.remove('open');
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Form submit
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if (!name || !email || !message) {
+        alert('이름, 이메일, 문의 내용은 필수 항목입니다.');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('올바른 이메일 주소를 입력해 주세요.');
+        return;
+      }
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+      ['name','company','email','message'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('service').selectedIndex = 0;
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const offset = header.offsetHeight + 16;
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
